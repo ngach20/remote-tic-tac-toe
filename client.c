@@ -59,7 +59,8 @@ void game_loop(int fd){
                 }
             }
 
-            read(fd, buf, 64);
+            //Receive board data
+            read(fd, buf, 9);
 
             print_board(buf);
             memset(buf, 0, sizeof(buf));
@@ -67,7 +68,8 @@ void game_loop(int fd){
             printf("Its now your opponent's turn.\n");
             fflush(stdout);
 
-            read(fd, buf, 64);
+            //Receive board data
+            read(fd, buf, 9);
 
             print_board(buf);
             memset(buf, 0, sizeof(buf));
@@ -126,28 +128,15 @@ void client_process(){
     //Suspend until an opponent is found.
     if((waiting_process_pid = fork()) == 0){
         while(1){
-            if(fork() == 0){
-                printf("\r                               ");
-                printf("\rWaiting for another player.");
-                exit(0);
-            }else{ 
-                wait(NULL);
-            }
+            printf("\r                               ");
+            printf("\rWaiting for another player.");
+            fflush(stdout);
             sleep(1);
-            if(fork() == 0){
-                printf("\rWaiting for another player..");
-                exit(0);
-            }else{
-                wait(NULL);
-            }
+            printf("\rWaiting for another player..");
+            fflush(stdout);
             sleep(1);
-            if(fork() == 0){
-                printf("\rWaiting for another player...");
-                exit(0);
-            }
-            else{
-                wait(NULL);
-            }
+            printf("\rWaiting for another player...");
+            fflush(stdout);
             sleep(1);
         }
     }else{

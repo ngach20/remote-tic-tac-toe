@@ -63,8 +63,8 @@ void game_loop(int p1_fd, int p2_fd, int server){
 
         make_move(game, r, c);
 
-        write(player->p_fd, game->board, 64);
-        write(waiter->p_fd, game->board, 64);
+        write(player->p_fd, game->board, 9);
+        write(waiter->p_fd, game->board, 9);
 
         //Announce the winner and end the game
         if((winner = check_winner(game)) != -1){
